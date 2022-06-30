@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            font-family: 'Dancing Script', cursive;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        body {
+
+
+            background: url("https://i0.wp.com/img.3dmgame.com/uploads/images/news/20190727/1564216757_384143.jpg");
+            background-position: 0 0;
+            overflow: hidden;
+
+        }
+
+        table {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.8);
+            border-collapse: collapse;
+            font-size: 2rem;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
+                0 0 10px rgba(200, 200, 200, 0.8),
+                0 0 15px rgba(250, 250, 250, 0.8);
+            transition: 1s;
+
+        }
+
+        table:hover {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8),
+                0 0 30px rgba(200, 200, 200, 0.8),
+                0 0 45px rgba(250, 250, 250, 0.8);
+        }
+
+        td {
+            border: 1px solid;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            vertical-align: middle;
+            transition: .3s;
+        }
+
+        td:hover {
+            background: rgba(255, 150, 0, 1);
+        }
+
+        .playing {
+            transform: scale(1.1);
+            border-color: #ffc600;
+            box-shadow: 0 0 1rem #ffc600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table>
+        <tr>
+            <td colspan="4" id="input">0</td>
+        </tr>
+        <tr>
+            <td>C</td>
+            <td>/</td>
+            <td>*</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td rowspan="2">+</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td rowspan="2">=</td>
+        </tr>
+        <tr>
+            <td colspan="2">0</td>
+            <td>.</td>
+
+        </tr>
+    </table>
+
+    <script>
+        const input = document.getElementById('input')
+        const tds = document.querySelectorAll('td:not(#input)')
+        const td = document.getElementsByTagName('td')
+
+        for (const td of tds) {
+            td.onclick = () => {
+                const text = td.innerText
+                console.log(td.innerText)
+                if (text === '=') {
+                    //執行算式
+                    input.innerText = eval(input.innerText)
+                } else if (text === 'C') {
+                    // 重設
+                    input.innerText = '0'
+                } else {
+                    // 一般按鍵
+                    if (input.innerText === '0') {
+                        input.innerText = text
+                    } else {
+                        input.innerText += text
+                    }
+                }
+            }
+        }
+        document.onkeydown = event => {
+            // 
+            if (event.key === 'Enter') {
+
+                input.innerText = eval(input.innerText)
+                const text = input.innerText
+
+            } else if (
+                !isNaN(parseInt(event.key)) ||
+                event.key === '+' ||
+                event.key === '-' ||
+                event.key === '*' ||
+                event.key === '/' ||
+                event.key === '.'
+            ) {
+                if (input.innerText === '0') {
+                    input.innerText = event.key
+                } else {
+                    input.innerText += event.key
+                }
+            } else if (event.key = 'Backspace') {
+                let text = input.innerText.slice(0, -1)
+                input.innerText = text
+            } else if (event.key = 'c') {
+                input.innerText = 0
+            }
+        }
+
+        
+    </script>
+</body>
+
+</html>
